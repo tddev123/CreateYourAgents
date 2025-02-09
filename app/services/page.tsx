@@ -5,31 +5,32 @@ export default function Services() {
   const plans = [
     {
       name: "Starter",
-      price: "500",
+      price: "Free",
       description: "Perfect for small businesses just starting with AI automation",
       features: [
-        "Custom AI Bot",
+        "See what it can do",
+        "Simple AI Bot",
         "Basic task automation",
         "Clicking",
         "Copy & Pasting",
-        "50 Action Tasks",
-        "Permanent Bot Ownership",
-        "No Subscription Required",
+        "20 Action Tasks"
+      
       ],
       color: "bg-blue-500",
     },
     {
       name: "Professional",
-      price: "2499",
+      price: "$500",
       description: "Ideal for growing businesses with multiple automation needs",
       features: [
-        "Everything in Starter",
-        "Advanced task automation",
-        "Document processing AI",
-        "Custom API integration",
-        "Advanced analytics dashboard",
-        "Priority support",
-        "15 automated workflows",
+        "Perfected AI Bot",
+        "Complex task automation",
+        "Clicking",
+        "Copy & Pasting",
+        "Can use ChatGPT",
+        "up to 100 Action Tasks",
+        "Permanent Bot Ownership",
+        "Free Technical support",
       ],
       color: "bg-green-500",
     },
@@ -38,13 +39,15 @@ export default function Services() {
       price: "Custom",
       description: "For large organizations requiring comprehensive AI solutions",
       features: [
-        "Everything in Professional",
+        
         "Unlimited automated workflows",
-        "Custom AI model training",
+        "Very Advanced AI model training",
         "Full system integration",
-        "Dedicated account manager",
-        "24/7 priority support",
-        "Custom feature development",
+        "Free Evolution of models",
+        "Lifetime Technical support"
+        
+        
+        
       ],
       color: "bg-yellow-500",
     },
@@ -76,12 +79,12 @@ export default function Services() {
                   </div>
                   <div className="flex-1">
                     <p className="mt-4 flex items-baseline justify-center">
-                      <span className="text-5xl font-extrabold tracking-tight text-gray-900">${plan.price}</span>
+                      <span className="text-5xl font-extrabold tracking-tight text-gray-900">{plan.price}</span>
                       {plan.name === "Professional" ? (
-                        <span className="ml-1 text-xl font-semibold text-gray-500">/month</span>
+                        <span className="ml-1 text-xl font-semibold text-gray-500">one time</span>
                       ) : (
                         plan.price !== "Custom" && (
-                          <span className="ml-1 text-xl font-semibold text-gray-500">One time</span>
+                          <span className="ml-1 text-xl font-semibold text-gray-500"></span>
                         )
                       )}
                     </p>
