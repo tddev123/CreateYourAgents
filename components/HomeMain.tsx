@@ -47,7 +47,7 @@ export default function HomeMain() {
                 Why Choose CreateYourAgents?
               </h2>
               <p className="mt-4 text-xl text-gray-600">
-                We create custom AI Agent that perfectly fit your business needs
+                This AI can make you or your employee's jobs easier and can potential replace employees entirely.
               </p>
             </div>
 
