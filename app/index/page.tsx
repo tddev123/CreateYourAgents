@@ -1,6 +1,6 @@
 // pages/index.tsx
 
-import { Footer, Navigation } from '@/components/Layout';
+
 import { ArrowRight, Bot, Clock, DollarSign } from 'lucide-react';
 
 export default function HomeMain() {
