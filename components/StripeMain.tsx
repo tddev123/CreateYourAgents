@@ -1,24 +1,24 @@
-"use client";
+"use client"
+
+
 
 import { useSearchParams } from "next/navigation";
 import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutPage from "./CheckoutPage";
+import { Suspense } from "react";
 
-// Make sure your publishable key is defined
-if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
-  throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined");
+if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+  throw new Error("Missing Stripe publishable key");
 }
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function StripeHome() {
-  // Use useSearchParams to get the plan info passed from the Services page
+function StripeContent() {
   const searchParams = useSearchParams();
-  const planName = searchParams.get("plan") || "Unknown Plan";
-  // Note: price should be a numeric value; if it's "0" or "500", parsing will work correctly
-  const priceParam = searchParams.get("price") || "0";
-  const amount = parseInt(priceParam, 10);
+  const planName = searchParams.get("plan") ?? "Standard Plan";
+  const priceParam = searchParams.get("price") ?? "0";
+  const amount = parseInt(priceParam, 10) || 0;
 
   return (
     <main className="max-w-6xl mx-auto p-10 text-black text-center border m-10 rounded-md">
@@ -31,16 +31,24 @@ export default function StripeHome() {
         </h2>
       </div>
 
-      <Elements 
+      <Elements
         stripe={stripePromise}
         options={{
           mode: "payment",
-          amount: convertToSubcurrency(amount), // Convert dollars to cents (or your currency’s subunit)
+          amount: convertToSubcurrency(amount),
           currency: "usd",
         }}
       >
         <CheckoutPage amount={amount} />
       </Elements>
     </main>
+  );
+}
+
+export default function StripeHome() {
+  return (
+    <Suspense fallback={<div>Loading payment gateway...</div>}>
+      <StripeContent />
+    </Suspense>
   );
 }
