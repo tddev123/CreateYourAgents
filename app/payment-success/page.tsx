@@ -1,13 +1,11 @@
 import PaymentSuccess from "@/components/PaymentSuccess";
 
-export default function PaymentSuccessPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
-  const amount = typeof searchParams.amount === "string" ? searchParams.amount : "0";
+interface PageProps {
+  searchParams: { amount?: string };
+}
+
+export default function PaymentSuccessPage({ searchParams }: PageProps) {
+  const amount = searchParams.amount ?? "0"; // Ensure amount is always a string
 
   return <PaymentSuccess searchParams={{ amount }} />;
 }
-
-//erroe
