@@ -20,7 +20,7 @@ export default function Services() {
     },
     {
       name: "Professional",
-      price: 500, // paid plan
+      price: 10, // paid plan
       description: "Ideal for growing businesses with multiple automation needs",
       features: [
         "Perfected AI Bot",
