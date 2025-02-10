@@ -1,16 +1,20 @@
 // app/payment-success/page.tsx
 import { Metadata } from "next";
 
+type SearchParamsProps = {
+  params: Record<string, string>;
+  searchParams: { amount?: string };
+}
+
 export const metadata: Metadata = {
   title: 'Payment Success',
 };
 
-export default function PaymentSuccess({
+const PaymentSuccess = ({
+  params,
   searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const amount = searchParams.amount as string;
+}: SearchParamsProps) => {
+  const { amount = "0" } = searchParams;
 
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-green-400 to-green-600">
@@ -24,3 +28,5 @@ export default function PaymentSuccess({
     </main>
   );
 }
+
+export default PaymentSuccess;
