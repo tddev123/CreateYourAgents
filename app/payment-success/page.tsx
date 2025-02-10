@@ -1,15 +1,13 @@
 // app/payment-success/page.tsx
 import PaymentSuccess from "@/components/PaymentSuccess";
-import type { ParsedUrlQuery } from "querystring";
 
-export default async function PaymentSuccessPage({
+// Here we define the type for searchParams as a plain object.
+export default function PaymentSuccessPage({
   searchParams,
 }: {
-  // We’re asserting here that searchParams is what we expect.
-  searchParams: ParsedUrlQuery;
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const amount =
     typeof searchParams.amount === "string" ? searchParams.amount : "0";
-  // We cast our prop to match the PaymentSuccess component’s expected type.
   return <PaymentSuccess searchParams={{ amount }} />;
 }
