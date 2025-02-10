@@ -9,3 +9,5 @@ export default function PaymentSuccessPage({
 
   return <PaymentSuccess searchParams={{ amount }} />;
 }
+
+//erroe
