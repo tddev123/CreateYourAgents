@@ -1,7 +1,7 @@
 // app/payment-success/page.tsx
 import { Metadata } from "next";
 
-type SearchParams = {
+type Props = {
   searchParams: {
     amount: string;
   };
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   title: 'Payment Success',
 };
 
-export default function PaymentSuccess({
+export default async function PaymentSuccess({
   searchParams,
-}: SearchParams) {
+}: Props) {
   const { amount } = searchParams;
 
   return (
