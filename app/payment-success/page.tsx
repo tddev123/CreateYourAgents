@@ -1,20 +1,17 @@
 import type { Metadata } from "next"
 
-type SearchParams = {
-  amount: string
-}
-
 export const metadata: Metadata = {
   title: "Payment Success",
   description: "Your payment was successful",
 }
 
-export default function PaymentSuccess({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
-  const { amount } = searchParams
+type Props = {
+  params: { [key: string]: string | string[] }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function PaymentSuccess({ searchParams }: Props) {
+  const amount = searchParams.amount as string
 
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-green-400 to-green-600">
