@@ -8,25 +8,23 @@ interface PaymentData {
   redirect_status: string;
 }
 
-// Fetch payment details dynamically
-async function fetchPaymentDetails(): Promise<PaymentData> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const plan = JSON.parse(localStorage.getItem("selectedPlan") || "{}");
-      resolve({
-        amount: plan.price || 0,
-        payment_intent: "pi_123456789", // Simulating a transaction ID
-        redirect_status: "succeeded", // Mocking a success status
-      });
-    }, 500);
-  });
-}
-
 export default function PaymentSuccess() {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
 
   useEffect(() => {
-    fetchPaymentDetails().then((data) => setPaymentData(data));
+    async function fetchPaymentDetails() {
+      // Ensure the code runs only on the client side
+      if (typeof window !== "undefined") {
+        const plan = JSON.parse(localStorage.getItem("selectedPlan") || "{}");
+        setPaymentData({
+          amount: plan.price || 0,
+          payment_intent: "pi_123456789", // Simulating a transaction ID
+          redirect_status: "succeeded", // Mocking a success status
+        });
+      }
+    }
+
+    fetchPaymentDetails();
   }, []);
 
   if (!paymentData) return <div>Loading payment details...</div>;
