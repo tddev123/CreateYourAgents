@@ -1,21 +1,24 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 interface PaymentData {
-  amount: string;
+  amount: number;
   payment_intent: string;
   redirect_status: string;
 }
 
+// Fetch payment details dynamically
 async function fetchPaymentDetails(): Promise<PaymentData> {
-  // Simulating an async operation like fetching from an API or local storage
   return new Promise((resolve) => {
     setTimeout(() => {
+      const plan = JSON.parse(localStorage.getItem("selectedPlan") || "{}");
       resolve({
-        amount: "100", // Example default value
-        payment_intent: "pi_123456789",
-        redirect_status: "succeeded",
+        amount: plan.price || 0,
+        payment_intent: "pi_123456789", // Simulating a transaction ID
+        redirect_status: "succeeded", // Mocking a success status
       });
-    }, 1000);
+    }, 500);
   });
 }
 
@@ -26,32 +29,22 @@ export default function PaymentSuccess() {
     fetchPaymentDetails().then((data) => setPaymentData(data));
   }, []);
 
-  if (!paymentData) {
-    return (
-      <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-gray-400 to-gray-600">
-        <h1 className="text-4xl font-extrabold mb-2">Loading payment details...</h1>
-      </main>
-    );
-  }
-
-  const { amount, payment_intent, redirect_status } = paymentData;
+  if (!paymentData) return <div>Loading payment details...</div>;
 
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-green-400 to-green-600">
-      <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">
-          {redirect_status === "succeeded" ? "Payment Successful!" : "Payment Processing"}
-        </h1>
-        <h2 className="text-2xl">You successfully sent</h2>
+      <h1 className="text-4xl font-extrabold mb-2">
+        {paymentData.redirect_status === "succeeded" ? "Payment Successful!" : "Payment Processing"}
+      </h1>
+      <h2 className="text-2xl">You successfully sent</h2>
 
-        <div className="bg-white p-2 rounded-md text-black mt-5 text-4xl font-bold">
-          ${amount}
-        </div>
-        
-        {redirect_status === "succeeded" && (
-          <p className="mt-4 text-sm">Transaction ID: {payment_intent}</p>
-        )}
+      <div className="bg-white p-2 rounded-md text-black mt-5 text-4xl font-bold">
+        ${paymentData.amount}
       </div>
+
+      {paymentData.redirect_status === "succeeded" && (
+        <p className="mt-4 text-sm">Transaction ID: {paymentData.payment_intent}</p>
+      )}
     </main>
   );
 }
