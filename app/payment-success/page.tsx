@@ -13,8 +13,8 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     // Wrap the localStorage retrieval in a Promise
-    const getSelectedPlan = (): Promise<Plan> =>
-      new Promise((resolve, reject) => {
+    const getSelectedPlan = (): Promise<Plan> => {
+      return new Promise((resolve, reject) => {
         try {
           const planData = localStorage.getItem("selectedPlan");
           if (planData) {
@@ -27,6 +27,7 @@ export default function PaymentSuccess() {
           reject(error);
         }
       });
+    };
 
     getSelectedPlan()
       .then((plan) => {
@@ -49,7 +50,6 @@ export default function PaymentSuccess() {
       <div className="mb-10">
         <h1 className="text-4xl font-extrabold mb-2">Thank you!</h1>
         <h2 className="text-2xl">You successfully sent</h2>
-
         <div className="bg-white p-2 rounded-md text-purple-500 mt-5 text-4xl font-bold">
           ${selectedPlan.price}
         </div>
