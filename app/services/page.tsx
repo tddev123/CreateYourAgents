@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { useState } from "react";
+import { LoadingSpinner } from "./loading-spinner";
 
 // Function to store plan price for checkout
 const saveSelectedPlan = (planName: string, price: number) => {
@@ -9,26 +11,51 @@ const saveSelectedPlan = (planName: string, price: number) => {
 };
 
 export default function Services() {
+  // Use a string to store the plan name currently in loading state
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
   const plans = [
     {
       name: "Starter",
       price: 0,
       description: "Perfect for small businesses just starting with AI automation",
-      features: ["See what it can do", "Simple AI Bot", "Basic task automation", "Clicking", "Copy & Pasting", "20 Action Tasks"],
+      features: [
+        "See what it can do",
+        "Simple AI Bot",
+        "Basic task automation",
+        "Clicking",
+        "Copy & Pasting",
+        "20 Action Tasks",
+      ],
       color: "bg-blue-500",
     },
     {
       name: "Professional",
       price: 10,
       description: "Ideal for growing businesses with multiple automation needs",
-      features: ["Perfected AI Bot", "Complex task automation", "Clicking", "Copy & Pasting", "Can use ChatGPT", "Up to 100 Action Tasks", "Permanent Bot Ownership", "Free Technical Support"],
+      features: [
+        "Perfected AI Bot",
+        "Complex task automation",
+        "Clicking",
+        "Copy & Pasting",
+        "Can use ChatGPT",
+        "Up to 100 Action Tasks",
+        "Permanent Bot Ownership",
+        "Free Technical Support",
+      ],
       color: "bg-green-500",
     },
     {
       name: "Enterprise",
       price: 0,
       description: "For large organizations requiring comprehensive AI solutions",
-      features: ["Unlimited automated workflows", "Very Advanced AI model training", "Full system integration", "Free Evolution of models", "Lifetime Technical Support"],
+      features: [
+        "Unlimited automated workflows",
+        "Very Advanced AI model training",
+        "Full system integration",
+        "Free Evolution of models",
+        "Lifetime Technical Support",
+      ],
       color: "bg-yellow-500",
     },
   ];
@@ -49,15 +76,24 @@ export default function Services() {
 
             <div className="mt-20 grid gap-8 lg:grid-cols-3 lg:gap-x-8">
               {plans.map((plan) => (
-                <div key={plan.name} className="relative bg-white rounded-2xl shadow-xl p-8 flex flex-col w-full h-full transform transition-all duration-300 hover:scale-105">
-                  <div className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full ${plan.color} text-white text-sm font-semibold py-2 px-4`}>
+                <div
+                  key={plan.name}
+                  className="relative bg-white rounded-2xl shadow-xl p-8 flex flex-col w-full h-full transform transition-all duration-300 hover:scale-105"
+                >
+                  <div
+                    className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full ${plan.color} text-white text-sm font-semibold py-2 px-4`}
+                  >
                     {plan.name}
                   </div>
 
                   <div className="flex-1">
                     <p className="mt-4 flex items-baseline justify-center">
                       <span className="text-5xl font-extrabold tracking-tight text-gray-900">
-                        {plan.price === 0 ? (plan.name === "Enterprise" ? "Negotiable" : "Free") : `$${plan.price}`}
+                        {plan.price === 0
+                          ? plan.name === "Enterprise"
+                            ? "Negotiable"
+                            : "Free"
+                          : `$${plan.price}`}
                       </span>
                     </p>
                     <p className="mt-6 text-lg text-gray-500">{plan.description}</p>
@@ -75,14 +111,40 @@ export default function Services() {
                   </div>
 
                   <div className="mt-8 w-full">
-                    <Link href={plan.price > 0 ? "/Checkout" : "/contact"} passHref>
-                      <button
-                        onClick={() => plan.price > 0 && saveSelectedPlan(plan.name, plan.price)}
-                        className={`block w-full ${plan.color} border border-transparent rounded-md py-3 px-8 text-center font-medium text-white hover:opacity-90 transition-opacity duration-200`}
-                      >
-                        Get started with {plan.name}
-                      </button>
-                    </Link>
+                    <button
+                      onClick={async () => {
+                        if (plan.price > 0) {
+                          saveSelectedPlan(plan.name, plan.price);
+                          setLoadingPlan(plan.name); // mark which plan is loading
+                          try {
+                            const res = await fetch("/api/checkout", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ planName: plan.name, price: plan.price }),
+                            });
+                            if (!res.ok) throw new Error("Checkout request failed");
+                            const data = await res.json();
+
+                            if (data.url) {
+                              window.location.href = data.url;
+                            }
+                          } catch (error) {
+                            console.error("Checkout error:", error);
+                          } finally {
+                            // If you prefer to remove loading after a successful redirect,
+                            // keep in mind the user might leave the page before this runs:
+                            setLoadingPlan(null);
+                          }
+                        }
+                      }}
+                      className={`flex justify-center items-center w-full ${plan.color} border border-transparent rounded-md py-3 px-8 text-center font-medium text-white hover:opacity-90 transition-opacity duration-200`}
+                    >
+                      {loadingPlan === plan.name ? (
+                        <LoadingSpinner />
+                      ) : (
+                        `Get started with ${plan.name}`
+                      )}
+                    </button>
                   </div>
                 </div>
               ))}
