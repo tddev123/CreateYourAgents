@@ -7,7 +7,6 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "@/lib/convertToSubcurrency";
-import { Span } from "next/dist/trace";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -79,8 +78,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     );
   }
 
-  return ( 
-   
+  return (
     <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
       {clientSecret && <PaymentElement />}
 
@@ -93,7 +91,6 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
         {!loading ? `Pay $${amount}` : "Processing..."}
       </button>
     </form>
-    
   );
 };
 

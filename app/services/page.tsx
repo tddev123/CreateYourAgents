@@ -75,7 +75,7 @@ export default function Services() {
                   </div>
 
                   <div className="mt-8 w-full">
-                    <Link href={plan.price > 0 ? "/Checkout" : "/contact"} passHref>
+                    <Link href={plan.price > 0 ? "/StripeMain" : "/contact"} passHref>
                       <button
                         onClick={() => plan.price > 0 && saveSelectedPlan(plan.name, plan.price)}
                         className={`block w-full ${plan.color} border border-transparent rounded-md py-3 px-8 text-center font-medium text-white hover:opacity-90 transition-opacity duration-200`}
