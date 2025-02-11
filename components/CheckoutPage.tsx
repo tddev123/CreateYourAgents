@@ -16,6 +16,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Create the PaymentIntent on your server using the selected plan's amount.
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: {
@@ -24,7 +25,10 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => setClientSecret(data.clientSecret))
+      .catch((error) => {
+        console.error("Error creating PaymentIntent:", error);
+      });
   }, [amount]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,34 +36,33 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     setLoading(true);
 
     if (!stripe || !elements) {
+      setLoading(false);
       return;
     }
 
+    // Optional: Validate or submit the PaymentElement form details
     const { error: submitError } = await elements.submit();
-
     if (submitError) {
       setErrorMessage(submitError.message);
       setLoading(false);
       return;
     }
 
+    // Confirm the payment without passing the amount via query parameters.
+    // Your PaymentSuccess page will retrieve the plan details (including the amount)
+    // from localStorage using a Promise.
     const { error } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `https://create-your-agents-git-branch-1-lilbubs-projects.vercel.app/payment-success?amount=${amount}`,
+        return_url:
+          "https://create-your-agents-git-branch-1-lilbubs-projects.vercel.app/payment-success",
       },
     });
 
     if (error) {
-      // This point is only reached if there's an immediate error when
-      // confirming the payment. Show the error to your customer (for example, payment details incomplete)
       setErrorMessage(error.message);
-    } else {
-      // The payment UI automatically closes with a success animation.
-      // Your customer is redirected to your `return_url`.
     }
-
     setLoading(false);
   };
 
@@ -81,9 +84,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   return (
     <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
       {clientSecret && <PaymentElement />}
-
       {errorMessage && <div>{errorMessage}</div>}
-
       <button
         disabled={!stripe || loading}
         className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
