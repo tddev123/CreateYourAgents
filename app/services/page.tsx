@@ -59,6 +59,9 @@ export default function Services() {
     },
   ];
 
+
+ 
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
       <main className="flex-grow">
@@ -111,31 +114,15 @@ export default function Services() {
 
                   <div className="mt-8 w-full">
                     <button
-                      onClick={async () => {
-                        if (plan.price > 0) {
-                          saveSelectedPlan(plan.name, plan.price);
-                          setLoadingPlan(plan.name); // mark which plan is loading
-                          try {
-                            const res = await fetch("/api/checkout", {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({ planName: plan.name, price: plan.price }),
-                            });
-                            if (!res.ok) throw new Error("Checkout request failed");
-                            const data = await res.json();
-
-                            if (data.url) {
-                              window.location.href = data.url;
-                            }
-                          } catch (error) {
-                            console.error("Checkout error:", error);
-                          } finally {
-                            // If you prefer to remove loading after a successful redirect,
-                            // keep in mind the user might leave the page before this runs:
-                            setLoadingPlan(null);
-                          }
+                      onClick={() => {
+                        if (plan.price === 0) {
+                          window.location.href = "/contact";
+                        } else {
+                          window.location.href = "/api/checkout-sessions/create";
                         }
                       }}
+
+                      
                       className={`flex justify-center items-center w-full ${plan.color} border border-transparent rounded-md py-3 px-8 text-center font-medium text-white hover:opacity-90 transition-opacity duration-200`}
                     >
                       {loadingPlan === plan.name ? (
