@@ -79,12 +79,13 @@ export default function ProductsPage() {
     );
   }
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
+    <main className=''>
+    <div className="container mx-auto p-8  ">
+      <h1 className="text-3xl font-bold mb-10 text-center">Products</h1>
       {products.length === 0 ? (
         <p className="text-xl">No products available.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className=" flex items-center justify-center content-center ">
           {products.map((product) => (
             <div
               key={product.id}
@@ -94,17 +95,18 @@ export default function ProductsPage() {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover "
                 />
               )}
               <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
+                <h2 className="text-2xl font-semibold mb-2 text-center items-center">{product.name}</h2>
                 <p className="text-gray-600 mb-4">{product.description}</p>
                 <div className="flex justify-between items-center">
-                  <span className="font-bold">
+                  <span className="font-bold text-xl">
                     {(product.price / 100).toLocaleString(undefined, {
                       style: 'currency',
                       currency: product.currency.toUpperCase(),
+                      
                     })}
                   </span>
                   <button
@@ -120,5 +122,8 @@ export default function ProductsPage() {
         </div>
       )}
     </div>
+
+  <h1></h1>
+    </main>
   );
 }

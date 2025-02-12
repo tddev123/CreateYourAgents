@@ -10,7 +10,7 @@ const Navigation = () => {
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
+    { name: 'Products', href: '/products' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -98,8 +98,8 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">Quick Links</h3>
             <ul className="mt-4 space-y-4">
               <li>
-                <Link href="/services" className="text-gray-600 hover:text-indigo-600">
-                  Services
+                <Link href="/products" className="text-gray-600 hover:text-indigo-600">
+                  Products
                 </Link>
               </li>
               <li>
