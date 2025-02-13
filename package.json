@@ -27,7 +27,6 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-particles": "^2.12.2",
-    "react-tsparticles": "^2.12.2",
     "stripe": "^17.6.0",
     "tsparticles": "^3.8.1",
     "tsparticles-engine": "^2.12.0",
