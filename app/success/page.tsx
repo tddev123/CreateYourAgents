@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const PaymentSuccess: React.FC = () => {
   return (
-    <div className="min-h-screen  flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-xs w-full bg-white rounded-xl shadow-xl -mt-36 p-6 animate-fade-in">
         {/* Success Icon */}
         <div className="mb-4 flex justify-center">
