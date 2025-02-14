@@ -1,0 +1,99 @@
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+
+interface Agent {
+  id: number;
+  name: string;
+  image: string;
+  video: string;
+}
+
+const agents: Agent[] = [
+  { id: 1, name: "Instagram", image: "/static/images/image_fx_ (17).jpg", video: "/static/videos/video1.mp4" },
+  { id: 2, name: "Facebook", image: "/static/images/image_fx_ (19).jpg", video: "/static/videos/video2.mp4" },
+  { id: 3, name: "Universal", image: "/static/images/alien11111.png", video: "/static/images/fbagentvid.mp4" },
+  { id: 4, name: "Customer Service", image: "/static/images/image_fx_ (15).jpg", video: "/static/videos/video4.mp4" },
+  { id: 5, name: "Data Entry", image: "/static/images/image_fx_ (5).jpg", video: "/static/videos/video5.mp4" },
+  { id: 6, name: "Customer Service", image: "/static/images/image_fx_ (15).jpg", video: "/static/videos/video4.mp4" },
+  { id: 7, name: "Data Entry", image: "/static/images/image_fx_ (5).jpg", video: "/static/videos/video5.mp4" },
+];
+
+const AgentCards: React.FC = () => {
+  const [openVideoId, setOpenVideoId] = useState<number | null>(null);
+
+  const toggleVideo = (id: number) => {
+    setOpenVideoId((prev) => (prev === id ? null : id));
+  };
+
+  // Exclude the Universal agent for circle placement.
+  const nonUniversalAgents = agents.filter((agent) => agent.id !== 3).sort((a, b) => a.id - b.id);
+
+  /**
+   * Adjusts the position of each agent:
+   * - The Universal agent (id: 3) is centered.
+   * - Other agents are arranged along a circle with a smaller radius.
+   */
+  const getCardStyle = (agent: Agent) => {
+    if (agent.id === 3) {
+      return {
+        position: "absolute" as const,
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%) scale(1)",
+        zIndex: 10,
+      };
+    } else {
+      const index = nonUniversalAgents.findIndex((a) => a.id === agent.id);
+      const count = nonUniversalAgents.length;
+      const angle = (index / count) * 2 * Math.PI;
+      const radius = 200; // Reduced radius to ensure all agents fit within the container.
+      const x = radius * Math.cos(angle);
+      const y = radius * Math.sin(angle);
+      return {
+        position: "absolute" as const,
+        left: "50%",
+        top: "50%",
+        transform: `translate(${x}px, ${y}px) translate(-50%, -50%) scale(1)`,
+        zIndex: 5,
+      };
+    }
+  };
+
+  return (
+    <div className="w-full h-[600px] relative">
+      {agents.map((agent) => (
+        <div
+          key={agent.id}
+          className="transition-all duration-300 ease-out cursor-pointer"
+          style={{ ...getCardStyle(agent), width: "150px" }} // Card width reduced from 300px to 150px
+          onClick={() => toggleVideo(agent.id)}
+        >
+          <div className="rounded-xl shadow-lg overflow-hidden text-white">
+            <Image
+              src={agent.image}
+              alt={agent.name}
+              width={150} // Updated width
+              height={100} // Updated height to maintain a similar aspect ratio
+              className="w-full h-[100px] object-cover transform transition-transform duration-200 hover:scale-125"
+            />
+            {openVideoId === agent.id && (
+              <div className="w-full flex justify-center mt-2">
+                <video controls className="w-3/4 rounded-lg shadow-lg">
+                  <source src={agent.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
+            <div className="p-4 text-center">
+              <h3 className="text-xl font-semibold text-white">{agent.name}</h3>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default AgentCards;
