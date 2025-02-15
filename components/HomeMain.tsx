@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import AgentCards from "@/components/agent-cards";
 import ParticlesComponent from "@/components/particles.jsx";
 
 export default function HomeMain() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     const playAudio = () => {
@@ -17,16 +18,26 @@ export default function HomeMain() {
       }
     };
 
-    // Try playing automatically
-    playAudio();
+    
+    //document.addEventListener("click", playAudio, { once: true });
 
-    // Fallback: play on user interaction
-    document.addEventListener("click", playAudio, { once: true });
-
-    return () => {
-      document.removeEventListener("click", playAudio);
+   return () => {
+     // document.removeEventListener("click", playAudio);
     };
   }, []);
+
+  //const toggleMusic = () => {
+    //if (audioRef.current) {
+      //if (isPlaying) {
+      // audioRef.current.pause();
+     // } else {
+       // audioRef.current.play().catch(error => {
+        //  console.log("Error resuming audio:", error);
+       // });
+     // }
+    ///  setIsPlaying(!isPlaying);
+   // }
+ // };
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
@@ -35,13 +46,16 @@ export default function HomeMain() {
       </div>
 
       {/* Hidden audio element */}
-      <audio ref={audioRef} src="/static/images/Crazy.mp3" loop />
+      
 
       <main className="flex flex-col items-center justify-center px-4 py-12 md:py-24 text-white relative">
         <div className="w-full">
           <AgentCards />
         </div>
       </main>
+
+      {/* Glowing Music Toggle Button */}
+   
     </div>
   );
 }

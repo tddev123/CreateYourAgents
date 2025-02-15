@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Agent {
@@ -13,8 +14,8 @@ const agents: Agent[] = [
   { id: 1, name: "Instagram", image: "/static/images/image_fx_ (17).jpg", video: "/static/images/fbagentvid.mp4" },
   { id: 2, name: "Facebook", image: "/static/images/image_fx_ (19).jpg", video: "/static/images/fbagentvid.mp4" },
   { id: 3, name: "Universal", image: "/static/images/alien11111.png", video: "/static/images/fbagentvid.mp4" },
-  { id: 4, name: "Customer Service", image: "/static/images/image_fx_ (15).jpg", video: "/static/images/fbagentvid.mp4" },
-  { id: 5, name: "Data Entry", image: "/static/images/image_fx_ (5).jpg", video: "/static/images/fbagentvid.mp4" },
+  { id: 4, name: "CustomerService", image: "/static/images/image_fx_ (15).jpg", video: "/static/images/fbagentvid.mp4" },
+  { id: 5, name: "DataEntry", image: "/static/images/image_fx_ (5).jpg", video: "/static/images/fbagentvid.mp4" },
 ];
 
 const AgentCards: React.FC = () => {
@@ -105,17 +106,26 @@ const AgentCards: React.FC = () => {
                   className="w-full h-[200px] object-cover transform transition-transform duration-200 hover:scale-110"
                   onClick={() => toggleVideo(agent.id)}
                 />
-                {openVideoId === agent.id && (
-                  <div className="w-full flex justify-center mt-2">
+                {openVideoId === agent.id ? (
+                  <div className="w-full flex flex-col items-center mt-2">
+                    {/* Button positioned above the video */}
+                    <Link href={`/${agent.name}`}>
+                      <button className="mb-4 mt-2 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        Price
+                      </button>
+                    </Link>
+                    {/* Video player */}
                     <video controls className="w-3/4 rounded-lg shadow-lg">
                       <source src={agent.video} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
+                ) : (
+                  // Only display the agent name when video is not open
+                  <div className="p-4 text-center">
+                    <h3 className="text-xl font-semibold text-white">{agent.name}</h3>
+                  </div>
                 )}
-                <div className="p-4 text-center">
-                  <h3 className="text-xl font-semibold text-white">{agent.name}</h3>
-                </div>
               </div>
             </div>
           ))}
