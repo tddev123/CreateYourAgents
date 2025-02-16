@@ -80,7 +80,9 @@ const AgentCards: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    // The outer container now has a default margin-top of 28 (mobile)
+    // that resets to 0 on medium screens and up.
+    <div className="relative mt-28 md:mt-0">
       <div
         className="w-full overflow-hidden z-10 -mt-24"
         ref={containerRef}
@@ -131,7 +133,7 @@ const AgentCards: React.FC = () => {
           ))}
         </div>
       </div>
-      
+
       <div className="flex justify-center gap-8 mt-8">
         <button
           onClick={handlePrevious}
