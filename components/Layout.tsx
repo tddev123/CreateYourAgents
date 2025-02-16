@@ -9,8 +9,8 @@ const Navigation = () => {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Products", href: "/products" },
-    { name: "Examples", href: "/Examples" },
+    //{ name: "Products", href: "/products" },
+    //{ name: "Examples", href: "/Examples" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white">CreateYourAgents</span>
+              <span className="text-2xl font-bold text-white  hover:text-blue-400 focus:outline-none">CreateYourAgents</span>
             </Link>
           </div>
 
@@ -35,12 +35,7 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
-            >
-              Get Started
-            </Link>
+       
           </div>
 
           {/* Mobile menu button */}
@@ -68,13 +63,7 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                className="block w-full text-center bg-indigo-600 text-white px-4 py-2 rounded-md text-base font-medium hover:bg-indigo-700"
-                onClick={() => setIsOpen(false)}
-              >
-                Get Started
-              </Link>
+       
             </div>
           </div>
         )}
