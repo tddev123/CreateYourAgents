@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import AgentCards from "@/components/agent-cards";
 import ParticlesComponent from "@/components/particles.jsx";
+import AstralProjectionHome from "./AstralProjection";
 
 export default function HomeMain() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -50,7 +51,8 @@ export default function HomeMain() {
 
       <main className="flex flex-col items-center justify-center px-4 py-12 md:py-24 text-white relative">
         <div className="w-full">
-          <AgentCards />
+          <AstralProjectionHome/>
+        {/* AgentCards import to swithx back to aliens */ } 
         </div>
       </main>
 

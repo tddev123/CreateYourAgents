@@ -7,7 +7,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
 import "./globals.css";
-import { Footer, Navigation } from "@/components/Layout";
+import { Navigation } from "@/components/Layout"; //add footer
 
 
 const defaultUrl = process.env.VERCEL_URL
@@ -48,8 +48,9 @@ export default function RootLayout({
   </div>
 </main>
         </ThemeProvider>
-        <Footer/>
+  
       </body>
     </html>
   );
 }
+//add footer between main and body right under themeprovider

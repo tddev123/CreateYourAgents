@@ -21,11 +21,11 @@ const PaymentSuccess: React.FC = () => {
         <div className="text-center space-y-3">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Payment Successful!</h1>
           <p className="text-sm sm:text-base text-gray-600">
-            Thank you for your purchase. Click Contact at top right and call me for further instructions.
+            Thank you for your purchase. Text or call 7868862825 to set up call time. You can also Comment on Youtube if there is an issue.
           </p>
           <div className="bg-gray-50 rounded-lg p-3 mt-4">
             <div className="flex justify-center items-center">
-              <span className="text-2xl sm:text-3xl font-bold text-gray-800">$500</span>
+              <span className="text-2xl sm:text-3xl font-bold text-gray-800">$20</span>
             </div>
           </div>
         </div>
