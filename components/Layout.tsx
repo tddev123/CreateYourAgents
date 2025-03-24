@@ -11,7 +11,7 @@ const Navigation = () => {
     { name: "Home", href: "/" },
     //{ name: "Products", href: "/products" },
     //{ name: "Examples", href: "/Examples" },
-    { name: "Contact", href: "/contact" },
+    // i changed contact page name file name contacttttt{ name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white  hover:text-blue-400 focus:outline-none">CreateYourAgents</span>
+              <span className="text-2xl font-bold text-white  hover:text-blue-400 focus:outline-none">Astral Master</span>
             </Link>
           </div>
 
@@ -120,4 +120,4 @@ const Footer = () => {
   );
 };
 
-export { Navigation, Footer };
+export { Navigation }; //Add footer back in to make it work
