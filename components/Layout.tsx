@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white  hover:text-blue-400 focus:outline-none">Astral Master</span>
+              <span className="text-2xl font-bold text-white  hover:text-blue-400 focus:outline-none">Create Your Agents</span>
             </Link>
           </div>
 

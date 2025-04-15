@@ -11,11 +11,11 @@ interface Agent {
 }
 
 const agents: Agent[] = [
-  { id: 1, name: "Instagram", image: "/static/images/image_fx_ (17).jpg", video: "/static/images/fbagentvid.mp4" },
+  { id: 1, name: "Instagram", image: "/static/images/image_fx_ (17).jpg"},
   { id: 2, name: "Facebook", image: "/static/images/image_fx_ (19).jpg", video: "/static/images/fbagentvid.mp4" },
-  { id: 3, name: "Universal", image: "/static/images/alien11111.png", video: "/static/images/fbagentvid.mp4" },
+  { id: 3, name: "Universal", image: "/static/images/alien11111.png"},
   { id: 4, name: "Youtube", image: "/static/images/image_fx_ (24).jpg", video: "/static/images/Youtubeshortsbot.mp4" },
-  { id: 5, name: "CustomerService", image: "/static/images/image_fx_ (15).jpg", video: "/static/images/fbagentvid.mp4" },
+  { id: 5, name: "CustomerService", image: "/static/images/image_fx_ (15).jpg"},
 ];
 
 const AgentCards: React.FC = () => {
