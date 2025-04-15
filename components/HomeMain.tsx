@@ -23,7 +23,7 @@ export default function HomeMain() {
     //document.addEventListener("click", playAudio, { once: true });
 
    return () => {
-     // document.removeEventListener("click", playAudio);
+     // document.removeEventListener("click", playAudiO);
     };
   }, []);
 
