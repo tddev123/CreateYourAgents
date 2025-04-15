@@ -23,7 +23,7 @@ export default function HomeMain() {
     //document.addEventListener("click", playAudio, { once: true });
 
    return () => {
-     // document.removeEventListener("click", playAudio);
+     // document.removeEventListener("click", playAudiO);
     };
   }, []);
 
@@ -51,7 +51,7 @@ export default function HomeMain() {
 
       <main className="flex flex-col items-center justify-center px-4 py-12 md:py-24 text-white relative">
         <div className="w-full">
-          <AstralProjectionHome/>
+          <AgentCards/>
         {/* AgentCards import to swithx back to aliens */ } 
         </div>
       </main>
