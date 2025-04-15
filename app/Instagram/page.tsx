@@ -82,7 +82,7 @@ export default function ProductsPage() {
 
   // Filter to only display the product with id 'prod_Rm8GfFhuWUuAMi'
   const filteredProducts = products.filter(
-    (product) => product.id === 'prod_Rm8FbBs2qEDYaJ'
+    (product) => product.id === 'prod_S8VcPqDAC7SaNN'
   );
 
   return (
