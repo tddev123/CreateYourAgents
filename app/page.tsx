@@ -1,5 +1,6 @@
 import Hero from "@/components/hero";
 import HomeMain from "@/components/HomeMain";
+import Homeletter from "@/components/Letters";
 
 import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
 import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
@@ -10,7 +11,7 @@ export default async function Home() {
   return (
     <main className="">
        
-      <HomeMain/>
+      <Homeletter/>
    
     </main>
   );
