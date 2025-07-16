@@ -20,7 +20,6 @@ export default function ProductsPage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        console.log('Fetching products from /api/products...');
         const res = await fetch('/api/products');
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.statusText}`);
@@ -31,7 +30,6 @@ export default function ProductsPage() {
         }
         setProducts(data.products);
       } catch (err: any) {
-        console.error('Error fetching products:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -40,7 +38,6 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  // When the user clicks "Buy Now", send the product info to our checkout session API.
   const handleBuy = async (product: Product) => {
     setLoading(true);
     try {
@@ -51,13 +48,11 @@ export default function ProductsPage() {
       });
       const data = await res.json();
       if (data.url) {
-        // Redirect the user to Stripe Checkout.
         window.location.href = data.url;
       } else {
         alert('Failed to redirect to checkout');
       }
-    } catch (error) {
-      console.error('Checkout error:', error);
+    } catch {
       alert('An error occurred during checkout.');
     } finally {
       setLoading(false);
@@ -71,6 +66,7 @@ export default function ProductsPage() {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -78,52 +74,73 @@ export default function ProductsPage() {
       </div>
     );
   }
-  return (
-    <main className=''>
-    <div className="container mx-auto p-8  ">
-      <h1 className="text-3xl font-bold mb-10 text-center">Products</h1>
-      {products.length === 0 ? (
-        <p className="text-xl">No products available.</p>
-      ) : (
-        <div className=" flex items-center justify-center content-center ">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
-            >
-              {product.image && (
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover "
-                />
-              )}
-              <div className="p-4">
-                <h2 className="text-2xl font-semibold mb-2 text-center items-center">{product.name}</h2>
-                <p className="text-gray-600 mb-4">{product.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="font-bold text-xl">
-                    {(product.price / 100).toLocaleString(undefined, {
-                      style: 'currency',
-                      currency: product.currency.toUpperCase(),
-                      
-                    })}
-                  </span>
-                  <button
-                    onClick={() => handleBuy(product)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
 
-  <h1></h1>
-    </main>
+  return (
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+      <main className="flex-1 flex items-center justify-center py-12 px-4">
+        <div className="container mx-auto max-w-[1600px]"> {/* Wider container */}
+          <h1 className="text-3xl font-bold mb-10 text-center text-slate-800">Products</h1>
+
+          {products.length === 0 ? (
+            <p className="text-xl text-center">No products available.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow transition-all duration-300 hover:shadow-lg flex flex-col w-[22rem]" // Wider cards
+                >
+                  <div className="w-full h-56 relative">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                        onClick={() => handleBuy(product)}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span className="text-gray-500">No Image</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-5 pb-0">
+                    <h2 className="text-xl font-semibold text-slate-800">{product.name}</h2>
+                  </div>
+
+                  <div className="p-5 pt-3 flex-grow">
+                    <p className="text-slate-800">{product.description}</p>
+                  </div>
+
+                  <div className="p-5 pt-0 flex justify-between items-center">
+                    <span className="font-bold text-lg text-slate-900">
+                      {(product.price / 100).toLocaleString(undefined, {
+                        style: 'currency',
+                        currency: product.currency.toUpperCase(),
+                      })}
+                    </span>
+
+                    <button
+                      onClick={() => handleBuy(product)}
+                      className="inline-block py-2 px-4 bg-slate-800 hover:bg-slate-700 text-white text-center font-medium rounded-md transition-colors"
+                      disabled={loading}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+
+      <footer className="py-6 bg-white border-t">
+        <div className="container mx-auto px-4 text-center text-slate-500 text-sm">
+          <p>© {new Date().getFullYear()} Your Company. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   );
 }
