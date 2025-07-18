@@ -78,17 +78,17 @@ export default function ProductsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <main className="flex-1 flex items-center justify-center py-12 px-4">
-        <div className="container mx-auto max-w-[1600px]"> {/* Wider container */}
+        <div className="container mx-auto max-w-[1600px]">
           <h1 className="text-3xl font-bold mb-10 text-center text-slate-800">Products</h1>
 
           {products.length === 0 ? (
             <p className="text-xl text-center">No products available.</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
-              {products.map((product) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
+              {[...products].reverse().map((product) => (
                 <div
                   key={product.id}
-                  className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow transition-all duration-300 hover:shadow-lg flex flex-col w-[22rem]" // Wider cards
+                  className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow transition-all duration-300 hover:shadow-lg flex flex-col w-[22rem]"
                 >
                   <div className="w-full h-56 relative">
                     {product.image ? (
@@ -138,7 +138,7 @@ export default function ProductsPage() {
 
       <footer className="py-6 bg-white border-t">
         <div className="container mx-auto px-4 text-center text-slate-500 text-sm">
-          <p>© {new Date().getFullYear()} Your Company. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Whatthemail. All rights reserved.</p>
         </div>
       </footer>
     </div>
